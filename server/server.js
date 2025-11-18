@@ -2,8 +2,8 @@ import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import fs from 'fs';
-import cvRoutes from './server/routes/cvRoutes.js';
-import downloadRoutes from './server/routes/downloadRoutes.js';
+import cvRoutes from './routes/cvRoutes.js';
+import downloadRoutes from './routes/downloadRoutes.js';
 
 dotenv.config();
 
