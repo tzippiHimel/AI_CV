@@ -3,6 +3,7 @@ import { DownloadService } from "../services/downloadService.js";
 export class DownloadController {
   static async downloadFile(req, res) {
     try {
+      console.log("Received download request for file:", req.params.filename);
       const { filename } = req.params;
       const filePath = await DownloadService.downloadFile(filename);
 

@@ -5,11 +5,13 @@ import fs from 'fs';
 export class CVController {
     static async optimizeForJob(req, res) {
         try {
+            console.log('=== Starting CV optimization ===');
             const { jobDescription } = req.body;
             const cvFile = req.file;
 
             console.log('Received jobDescription:', jobDescription);
             console.log('Received file:', cvFile);
+            console.log('Environment GEMINI_API_KEY exists:', !!process.env.GEMINI_API_KEY);
 
             if (!cvFile) {
                 return res.status(400).json({ error: 'CV file is required' });
@@ -59,15 +61,25 @@ export class CVController {
             }
 
             // החזרת התוצאה ל-React
+            const formattedAnalysis = `
+Key Skills to Highlight:
+${analysis.keySkills.join(', ')}
+
+Suggested Changes:
+${analysis.suggestedChanges.map(change => `• ${change}`).join('\n')}
+
+Missing Skills:
+${analysis.missingSkills.join(', ')}
+
+Match Score: ${analysis.matchScore}%
+
+Recommendations:
+${analysis.recommendations.map(rec => `• ${rec}`).join('\n')}
+            `;
+
             res.json({
-                analysis: {
-                    keySkills: analysis.keySkills,
-                    suggestedChanges: analysis.suggestedChanges,
-                    missingSkills: analysis.missingSkills,
-                    matchScore: analysis.matchScore,
-                    recommendations: analysis.recommendations
-                },
-                filename
+                analysis: formattedAnalysis,
+                pdfFilename: filename
             });
 
         } catch (error) {
