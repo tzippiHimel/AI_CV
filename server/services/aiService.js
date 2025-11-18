@@ -8,21 +8,21 @@ export class AIService {
 
     async optimizeCV(cvBase64, jobDescription) {
         const prompt = `
-        אנא נתח את קורות החיים הבאים ותן המלצות לאופטימיזציה למשרה:
+        Please analyze the following CV and provide optimization recommendations for the job:
 
-        תיאור המשרה: ${jobDescription}
+        Job Description: ${jobDescription}
 
-        קורות החיים (base64): ${cvBase64}
+        CV (base64): ${cvBase64}
 
-        אנא ספק:
-        1. מיומנויות מרכזיות להדגיש
-        2. שינויים מוצעים
-        3. כישורים חסרים
-        4. ציון התאמה (0-100)
-        5. המלצות ספציפיות
-        6. תוכן קורות חיים משופר מלא
+        Please provide:
+        1. Key skills to highlight
+        2. Suggested changes
+        3. Missing skills
+        4. Match score (0-100)
+        5. Specific recommendations
+        6. Complete improved CV content
 
-        תן תשובה בפורמט JSON עם השדות הבאים:
+        Respond in JSON format with the following fields:
         {
             "keySkills": [],
             "suggestedChanges": [],
