@@ -65,7 +65,14 @@ function App() {
 
   const downloadPDF = () => {
     if (!pdfFilename) return;
-    window.open(`/api/download/${pdfFilename}`);
+    
+    // Create a temporary link element to trigger download
+    const link = document.createElement('a');
+    link.href = `/api/download/${pdfFilename}`;
+    link.download = pdfFilename;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   };
 
   return (

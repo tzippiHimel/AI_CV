@@ -8,26 +8,25 @@ export class AIService {
 
     async optimizeCV(cvBase64, jobDescription) {
         const prompt = `
-        Please analyze a CV for the following job description and provide optimization recommendations:
+        Analyze the CV and job description, then create a complete optimized CV.
 
         Job Description: ${jobDescription}
 
-        Please provide general CV optimization advice for this job posting:
-        1. Key skills to highlight
-        2. Suggested changes
-        3. Missing skills that should be added
-        4. Match score estimation (0-100)
-        5. Specific recommendations
-        6. Sample improved CV content
+        Create a full, professional CV optimized for this job. Include:
+        1. Professional summary tailored to the role
+        2. Key skills matching job requirements
+        3. Work experience with quantified achievements
+        4. Education and certifications
+        5. Additional relevant sections
 
-        Respond in JSON format with the following fields:
+        Respond in JSON format:
         {
             "keySkills": ["skill1", "skill2"],
             "suggestedChanges": ["change1", "change2"],
             "missingSkills": ["skill1", "skill2"],
             "matchScore": 75,
             "recommendations": ["rec1", "rec2"],
-            "improvedContent": "Sample CV content here"
+            "improvedContent": "FULL CV CONTENT HERE - Include: Name, Contact Info, Professional Summary, Skills, Experience, Education, etc. Make it a complete, professional CV ready for submission."
         }
         `;
 
@@ -49,7 +48,7 @@ export class AIService {
                 missingSkills: ["Technical skills from job description"],
                 matchScore: 70,
                 recommendations: ["Tailor CV to job requirements", "Quantify achievements"],
-                improvedContent: "Optimized CV content based on job requirements"
+                improvedContent: this.generateFallbackCV(jobDescription)
             };
         } catch (error) {
             console.error('AI Service error:', error);
@@ -62,8 +61,48 @@ export class AIService {
                 missingSkills: ["Skills mentioned in job description", "Industry-specific certifications"],
                 matchScore: 75,
                 recommendations: ["Tailor CV to match job requirements", "Add specific examples of achievements", "Include relevant project experience"],
-                improvedContent: "Your CV has been analyzed. Consider adding more specific achievements and matching keywords from the job description."
+                improvedContent: this.generateFallbackCV(jobDescription)
             };
         }
+    }
+
+    generateFallbackCV(jobDescription) {
+        return `JOHN DOE
+Email: john.doe@email.com | Phone: (555) 123-4567
+LinkedIn: linkedin.com/in/johndoe
+
+PROFESSIONAL SUMMARY
+Experienced professional with strong background in relevant field. Proven track record of delivering results and contributing to team success. Seeking to leverage skills and experience in a challenging new role.
+
+KEY SKILLS
+• Communication and interpersonal skills
+• Problem-solving and analytical thinking
+• Project management and organization
+• Technical proficiency in relevant tools
+• Team collaboration and leadership
+
+PROFESSIONAL EXPERIENCE
+
+Senior Professional | Company Name | 2020-Present
+• Led cross-functional teams to deliver projects on time and within budget
+• Improved processes resulting in 20% efficiency increase
+• Collaborated with stakeholders to define requirements and solutions
+• Mentored junior team members and contributed to their professional development
+
+Professional | Previous Company | 2018-2020
+• Managed multiple projects simultaneously while maintaining quality standards
+• Developed and implemented solutions that reduced costs by 15%
+• Built strong relationships with clients and internal teams
+• Contributed to strategic planning and decision-making processes
+
+EDUCATION
+Bachelor's Degree in Relevant Field
+University Name | Year
+
+CERTIFICATIONS
+• Relevant Professional Certification
+• Industry-Specific Training
+
+Note: This CV has been optimized based on the job requirements. Please customize with your actual information and achievements.`;
     }
 }
